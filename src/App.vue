@@ -11,7 +11,7 @@
 
 <style>
 #app {
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑";
+  font-family: "PingFang SC","微软雅黑","Helvetica Neue",Helvetica,"Hiragino Sans GB","Microsoft YaHei";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -54,8 +54,6 @@
                 // 为表单绑定验证功能
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
-                        // this.$router.push("/main");
                         console.log(this.Qs.stringify({
                             username: this.form.username,
                             password: this.form.password,
@@ -72,45 +70,41 @@
                                     'Content-Type': 'multipart/form-data'
                                 }
                             })
-                            .then( response=> {
-                                this.$store.commit("setPrinciple",response.data);
-                                console.log(response.data);
-                                console.log(response.status);
-                                console.log(response.statusText);
-                                this.$router.push("/main");;
-                            })
+                                .then( response=> {
+                                    this.$store.commit("setUser",response.data.data);
+                                    console.log(response.data);
+                                    console.log(response.data.status);
+                                    console.log(response.data.statusText);
+                                    console.log(this.$store.state.user);
+                                    // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
+                                    this.$router.push("/home");
+                                })
                             .catch( error=> {
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
                                     // that falls out of the range of 2xx
-                                    // console.log("error.response");
                                     console.log(error.response.data);
                                     console.log(error.response.status);
                                     console.log(error.response.statusText);
                                     const msg=`服务器返回信息：${error.response.status},${error.response.data.statusText}`;
                                     this.$alert(msg, '登录错误', {
                                         confirmButtonText: '确定'});
-                                    // console.log(self.resp);
-                                    // console.log(error.response.headers);
                                 } else if (error.request) {
+                                    // The request was made but no response was received
+                                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                                    // http.ClientRequest in node.js
                                     console.log(error.request);
                                     this.$alert(error.message, '登录错误', {
                                         confirmButtonText: '确定'});
                                 }else {
-                                    // The request was made but no response was received
-                                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                                    // http.ClientRequest in node.js
-                                    // console.log("error.request");
-                                    // console.log(error.request);
+                                    // Something happened in setting up the request that triggered an Error
                                     console.log("error.message");
                                     this.$alert(error.message, '登录错误', {
                                         confirmButtonText: '确定'});
-                                    // console.log("error.else");
-                                    // Something happened in setting up the request that triggered an Error
                                 }})
                     } else{
-                        this.$alert("表单验证错误", '登录错误', {
-                            confirmButtonText: '确定'});
+                        // this.$alert("表单验证错误", '登录错误', {
+                        //     confirmButtonText: '确定'});
                         return false;
                     }
                 });
